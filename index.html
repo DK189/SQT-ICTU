@@ -1,0 +1,227 @@
+<!Doctype xhtml>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lịch sinh viên</title>
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Lịch ICTU">
+    <link rel="icon" type="image/png" sizes="192x192" href="/Assets/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/Assets/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Assets/icons/favicon-16x16.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Lịch ICTU">
+    <link rel="apple-touch-icon" href="/Assets/icons/apple-icon.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/Assets/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/Assets/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Assets/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Assets/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Assets/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Assets/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/Assets/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Assets/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Assets/icons/apple-icon-180x180.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/Assets/icons/ms-icon-144x144.png">
+
+    <!-- Color the status bar on mobile devices -->
+    <meta name="theme-color" content="#009688">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+    <!-- Vendors css -->
+    <link rel="stylesheet" href="/Assets/vendors/bootstrap-4.1.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Assets/vendors/fullcalendar-3.9.0/fullcalendar.min.css" />
+    <link rel="stylesheet" href="/Assets/vendors/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.min.css" />
+
+    <!-- Material Design icons -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"> -->
+    <link rel="stylesheet" href="/Assets/fonts/Material-Icons/Material-Icons.css">
+    <!-- <link rel="stylesheet" href="/Assets/vendors/mdl/material.min.css"> -->
+    <link rel="stylesheet" href="/Assets/vendors/mdl/material.teal-purple.min.css">
+
+    <!-- Custom css -->
+    <link rel="stylesheet" href="/Assets/styles/mdl.css" />
+    <link rel="stylesheet" href="/Assets/styles/main.css" />
+</head>
+
+<body hidden>
+    <div hidden id="main" class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Lịch Sinh Viên</span>
+                <div class="mdl-layout-spacer"></div>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <header class="mdl-layout-title mdl-color-text--white" style="background-image: url('/Assets/images/android-L-Material-Design-Wallpapers-1.png');">
+                <span id="userInfor_Name">user@ictu.edu.vn</span>
+                <span id="userInfor_Class" class="text-right">KTPM_K13B</span>
+            </header>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="javascript:void(0);">
+                    <i class="material-icons pr-2" role="presentation">home</i>Home
+                </a>
+                <a class="mdl-navigation__link" href="javascript:void(0);" onclick="$('#syncModal').modal();">
+                    <i class="material-icons pr-2" role="presentation">sync</i>Sync
+                </a>
+                <div class="mdl-layout-spacer"></div>
+                <a id="buttonLogout" class="mdl-navigation__link" href="javascript:void(0);">
+                    <i class="material-icons pr-2" role="presentation">backspace</i>Logout
+                </a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="mdl-grid">
+                <div class="mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Login -->
+    <div class="modal fade" id="loginModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content mdl-color--white mdl-shadow--2dp" style="border-radius: 0;">
+                <div class="modal-header text-center">
+                    <img class="mb-4" src="/Assets/icons/android-icon-192x192.png" alt="" width="72" height="72" />
+                    <h5 class="modal-title" id="loginModalLabel">Đăng nhập tài khoản sinh viên</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 39px;" id="LoginModelLaberUsername">
+                                <i class="fa fa-user"></i>
+                            </span>
+                        </div>
+                        <input id="loginTxtUsername" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="LoginModelLaberUsername">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="LoginModelLaberPassword">
+                                <i class="fa fa-lock" style="width: 16px;"></i>
+                            </span>
+                        </div>
+                        <input id="loginTxtPassword" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="LoginModelLaberPassword">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="document.querySelector('#loginTxtUsername').value = ''; document.querySelector('#loginTxtPassword').value = '';">Reset</button>
+                    <button type="button" class="btn btn-primary" id="loginModalButtonLogin">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Setting -->
+    <div class="modal fade" id="syncModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="syncModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content mdl-color--white mdl-shadow--2dp" style="border-radius: 0;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="syncModalLabel">Đồng bộ dữ liệu</h5>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="mdl-list" id="listSemester"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button type="button" class="btn btn-primary" id="loginModalButtonLogin">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Install -->
+    <div class="modal fade" id="installModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="syncModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content mdl-color--white mdl-shadow--2dp" style="border-radius: 0;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="installModalLabel">Thêm ứng dụng vào màn hình chính?</h5>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mx-5">
+                        <img class="align-middle" width="80" height="80" src="/Assets/icons/android-icon-192x192.png"/>
+                        <span class="h4 ml-5 align-middle">Lịch ICTU</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="installModalSayYes">Thêm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/Assets/vendors/jquery-3.3.1.min.js"></script>
+    <script src="/Assets/vendors/bootstrap-4.1.0/dist/js/bootstrap.min.js"></script>
+    <script src="/Assets/vendors/moment.js"></script>
+    <script src="/Assets/vendors/moment-with-locales.js"></script>
+    <script src="/Assets/vendors/fullcalendar-3.9.0/fullcalendar.min.js"></script>
+    <script src="/Assets/vendors/fullcalendar-3.9.0/locale-all.js"></script>
+
+    <!-- MDL -->
+    <script src="/Assets/vendors/mdl/material.min.js"></script>
+
+    <!-- My Script... =)) -->
+    <script src="/Assets/scripts/main.js"></script>
+
+    <!-- SW.js -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(
+                    function(reg) {
+                        // Registration was successful
+                        // console.log('ServiceWorker registration successful with scope: ', reg);
+                        reg.onupdatefound = function () {
+                            var installing = reg.installing;
+                            installing.onstatechange = function () {
+                                if (installing.state === "installed") {
+                                    alert("Ứng dụng đã cập nhật phiên bản mới!!\n\nVui lòng khởi động lại ứng dụng để hoàn tất quá trình.");
+                                }
+                            }
+                        };
+                    },
+                    function(err) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', err);
+                    }
+                );
+            });
+        }
+    </script>
+
+    <script>
+        // $("#calendar").fullCalendar();
+        // $("#syncModal").modal();
+    </script>
+</body>
+
+</html>

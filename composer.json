@@ -1,0 +1,23 @@
+{
+    "name": "king/tnu-api-cloud",
+    "description": "TNU API CLOUD",
+    "authors": [
+        {
+            "name": "SQT",
+            "email": "admin@kingdark.org"
+        }
+    ],
+    "type": "project",
+    "minimum-stability": "stable",
+    "config": {
+        "platform": {
+            "php": "7.2.0"
+        }
+    },
+    "require": {
+        "php": "~7.2.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    }
+}
