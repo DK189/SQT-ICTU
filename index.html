@@ -80,15 +80,15 @@
                 <span id="userInfor_Class" class="text-right">KTPM_K13B</span>
             </header>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="javascript:void(0);">
+                <!-- <a class="mdl-navigation__link" href="javascript:void(0);">
                     <i class="material-icons pr-2" role="presentation">home</i>Home
-                </a>
+                </a> -->
                 <a class="mdl-navigation__link" href="javascript:void(0);" onclick="$('#syncModal').modal();">
-                    <i class="material-icons pr-2" role="presentation">sync</i>Sync
+                    <i class="material-icons pr-2" role="presentation">sync</i>Đồng bộ lịch
                 </a>
                 <div class="mdl-layout-spacer"></div>
                 <a id="buttonLogout" class="mdl-navigation__link" href="javascript:void(0);">
-                    <i class="material-icons pr-2" role="presentation">backspace</i>Logout
+                    <i class="material-icons pr-2" role="presentation">backspace</i>Đăng xuất
                 </a>
             </nav>
         </div>
@@ -149,7 +149,25 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                    <button type="button" class="btn btn-primary" id="loginModalButtonLogin">Lưu</button>
+                    <button type="button" class="btn btn-danger" id="syncModalButtonForceSync">Buộc đồng bộ</button>
+                    <button type="button" class="btn btn-primary" id="syncModalButtonSave">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Waiting -->
+    <div class="modal fade" id="waitingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="syncModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content mdl-color--white mdl-shadow--2dp" style="border-radius: 0;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="syncModalLabel">Xử lý dữ liệu</h5>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Mọi thứ sẽ làm việc nhanh thôi, kiên nhẫn một chút nhé...
+                    </p>
                 </div>
             </div>
         </div>
@@ -166,7 +184,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="mx-5">
-                        <img class="align-middle" width="80" height="80" src="/Assets/icons/android-icon-192x192.png"/>
+                        <img class="align-middle" width="80" height="80" src="/Assets/icons/android-icon-192x192.png" />
                         <span class="h4 ml-5 align-middle">Lịch ICTU</span>
                     </div>
                 </div>
@@ -200,11 +218,11 @@
                     function(reg) {
                         // Registration was successful
                         // console.log('ServiceWorker registration successful with scope: ', reg);
-                        reg.onupdatefound = function () {
+                        reg.onupdatefound = function() {
                             var installing = reg.installing;
-                            installing.onstatechange = function () {
+                            installing.onstatechange = function() {
                                 if (installing.state === "installed") {
-                                    alert("Ứng dụng đã cập nhật phiên bản mới!!\n\nVui lòng khởi động lại ứng dụng để hoàn tất quá trình.");
+                                    // alert("Ứng dụng đã cập nhật phiên bản mới!!\n\nVui lòng khởi động lại ứng dụng để hoàn tất quá trình.");
                                 }
                             }
                         };
