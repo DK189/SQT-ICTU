@@ -135,9 +135,12 @@ Array.from(document.querySelectorAll("a[href='']")).forEach(function (a) {
 		        console.log(w.semesters);
 		        console.log(w.time_table);
 
-				function refreshSyncModal () {
+				function refreshSyncModal (override) {
 					var semestersLoaded = Object.keys(w.time_table);
 					var lst = $("#listSemester");
+					if (!!override) {
+						$(lst).find("li").remove();
+					}
 					Array.from(w.semesters).forEach(function (semester) {
 						if (!!semester.MaKy && !!semester.TenKy) {
 							var $semester = $(lst).find("li#semester_" + semester.MaKy);
@@ -181,6 +184,22 @@ Array.from(document.querySelectorAll("a[href='']")).forEach(function (a) {
 					});
 				}
 				refreshSyncModal();
+
+				$("#syncModalButtonReloadSemesters").bind("click", function (e) {
+					$("#waitingModal").modal().one("shown.bs.modal", function () {
+
+						var semesters = apiGet("semester").responseJSON;
+						if (!!semesters) {
+							w.semesters = semesters;
+							session["semesters"] = JSON.stringify(w.semesters);
+							refreshSyncModal(true);
+						} else {
+							alert("Không thể lấy thông tin niên khoá của tài khoản này, vui lòng thử lại.");
+						}
+
+						$("#waitingModal").modal("hide");
+					});
+				});
 
 				$("#syncModalButtonSave").bind("click", function (e) {
 					$(".modal").modal("hide");
