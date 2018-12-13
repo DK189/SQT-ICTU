@@ -255,8 +255,12 @@ Array.from(document.querySelectorAll("a[href='']")).forEach(function (a) {
 						listWeek: {
 							titleFormat: 'DD-MM-YYYY'
 						}
-					},
+					}
 		        });
+
+				$(function ($) {
+					$("#calendar").fullCalendar("option", "height", "parent");
+				});
 
 		        Object.keys(w.time_table).forEach(function (semester) {
 		            if (!!w.time_table[semester]) {
