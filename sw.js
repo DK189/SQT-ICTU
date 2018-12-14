@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sqt-ictu-v1.8';
+const CACHE_NAME = 'sqt-ictu-v1.9';
 var urlsToCache = [
     "",
     "index.html",
