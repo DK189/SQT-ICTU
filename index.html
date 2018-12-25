@@ -221,6 +221,7 @@
                         reg.onupdatefound = function() {
                             var installing = reg.installing;
                             installing.onstatechange = function() {
+                                console.log("SW.js", installing.state);
                                 if (installing.state === "installed") {
                                     // alert("Ứng dụng đã cập nhật phiên bản mới!!\n\nVui lòng khởi động lại ứng dụng để hoàn tất quá trình.");
                                 }
