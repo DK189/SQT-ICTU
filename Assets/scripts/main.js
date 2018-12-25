@@ -1,26 +1,3 @@
-window.addEventListener("beforeinstallprompt", function (ctx) {
-	ctx.preventDefault();
-	console.log(ctx);
-	$("#installModalSayYes").bind("click", function (me) {
-		console.log(ctx.prompt(), ctx);
-		ctx.userChoice
-		.then(function (choiceResult) {
-			if (choiceResult.outcome === 'accepted') {
-				console.log('User accepted the A2HS prompt');
-			} else {
-				console.log('User dismissed the A2HS prompt');
-			}
-			deferredPrompt = null;
-		}, console.error);
-	});
-	$("#installModal").modal();
-});
-
-window.addEventListener('appinstalled', (evt) => {
-	console.log('a2hs', 'installed');
-});
-
-
 
 function apiGet (action, callback, forceSync) {
 	return $.getJSON({
@@ -43,7 +20,7 @@ Array.from(document.querySelectorAll("a[href='']")).forEach(function (a) {
 	a.href = "javascript:void(0);";
 });
 
-(function (__APP_VESION__,w,d,$) {
+(async function (__APP_VESION__,w,d,$) {
 	if (location.protocol.toUpperCase().indexOf("HTTPS") === -1) {
 		// location.protocol = "https";
 		// return;
