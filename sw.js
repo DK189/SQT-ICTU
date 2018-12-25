@@ -13,6 +13,9 @@ var urlsToCache = [
 
     "Assets/icons/no-bg/icon.png",
 
+    "Assets/icons/icon-512x512.png",
+    "Assets/icons/icon-1024x1024.png",
+
     "Assets/icons/android-icon-144x144.png",
     "Assets/icons/apple-icon-72x72.png",
     "Assets/icons/android-icon-192x192.png",
