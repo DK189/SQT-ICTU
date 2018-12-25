@@ -326,16 +326,6 @@ Array.from(document.querySelectorAll("a[href='']")).forEach(function (a) {
 
 		        $("#main").removeAttr("hidden");
 
-
-			    window.addEventListener("beforeinstallprompt", function (e) {
-			        e.preventDefault();
-			        console.log(e);
-			        $("#installModalSayYes").bind("click", function (me) {
-			            console.log(e.prompt(), e);
-			        });
-			        $("#installModal").modal();
-			    });
-
 				$("#waitingModal").modal("hide");
 			});
 		}, 100);
@@ -362,3 +352,25 @@ Array.from(document.querySelectorAll("a[href='']")).forEach(function (a) {
         });
     }
 })(3,window,document,jQuery);
+
+window.addEventListener("beforeinstallprompt", function (ctx) {
+	ctx.preventDefault();
+	console.log(ctx);
+	$("#installModalSayYes").bind("click", function (me) {
+		console.log(ctx.prompt(), ctx);
+		ctx.userChoice
+			.then(function (choiceResult) {
+				if (choiceResult.outcome === 'accepted') {
+					console.log('User accepted the A2HS prompt');
+				} else {
+					console.log('User dismissed the A2HS prompt');
+				}
+				deferredPrompt = null;
+			}, console.error);
+	});
+	$("#installModal").modal();
+});
+
+window.addEventListener('appinstalled', (evt) => {
+	console.log('a2hs', 'installed');
+});
