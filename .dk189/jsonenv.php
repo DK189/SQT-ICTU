@@ -1,6 +1,9 @@
 <?php
 try {
     $fp = rtrim(getcwd(), "/\\") . "/" . ".env.json";
+    if (defined("JSONENV_CUSTOM_FILE_PATH") && !!JSONENV_CUSTOM_FILE_PATH) {
+        $fp = JSONENV_CUSTOM_FILE_PATH;
+    }
     $fp = realpath($fp);
     if (!!$fp && !!file_exists($fp)) {
         $jsonContent = file_get_contents($fp);
