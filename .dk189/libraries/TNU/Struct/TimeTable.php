@@ -44,7 +44,6 @@ class TimeTable extends SubjectTable implements \JsonSerializable {
                         $datum->GiaoVien = $entry->GiaoVien;
                         $datum->HinhThuc = $entry->HinhThuc;
                         $datum->LoaiLich = $entry->LoaiLich;
-                        $datum->MaMon = $entry->MaMon;
                         $datum->Ngay = $entry->Ngay;
                         $datum->SoBaoDanh = $entry->SoBaoDanh;
                         $datum->ThoiGian = $entry->ThoiGian;
