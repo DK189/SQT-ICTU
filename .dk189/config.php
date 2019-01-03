@@ -29,5 +29,4 @@ setCrypterSecret(SQT_Crypter_KEY, SQT_Crypter_IV);
 
 $fdb = new \Google\Firebase\DB(SQT_Firebase_RealtimeDB_Url, SQT_Firebase_RealtimeDB_Auth);
 $fb = new \Hooker\Facebook($fdb, SQT_Facebook_Page_Token);
-var_dump(SQT_Crypter_IV);
 ?>
