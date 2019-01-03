@@ -61,7 +61,7 @@ if ($action === "login") {
                 break;
             }
             case "time-table": {
-                $tkb = $Machine->getTimeTableOfStudy($_POST["semester"]);
+                $tkb = $Machine->getTimeTableOfStudy(isset($_POST["semester"]) ? $_POST["semester"] : true);
                 jshow($tkb);
                 break;
             }
@@ -70,7 +70,7 @@ if ($action === "login") {
                 break;
             }
             case "exam-table": {
-                $tkb = $Machine->getTimeTableOfTest($_POST["semester"]);
+                $tkb = $Machine->getTimeTableOfTest(isset($_POST["semester"]) ? $_POST["semester"] : true);
                 jshow($tkb);
                 break;
             }
