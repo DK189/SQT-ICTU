@@ -44,7 +44,7 @@ class DTE extends Client implements ClientInterface {
     }
 
     public function __toString() {
-        return "TNU\DTZ::{$this->host}";
+        return "TNU\DTE::{$this->host}";
     }
 
     /**

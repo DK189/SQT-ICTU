@@ -23,6 +23,12 @@ class Machine implements ClientInterface {
         }
 
         try {
+            $this->Clients->{"DTE"} = "\TNU\DTE";
+        } catch(\Exception $e) {
+            $this->Clients->{"DTE"} = false;
+        }
+
+        try {
             $this->Clients->{"DTF"} = "\TNU\DTF";
         } catch(\Exception $e) {
             $this->Clients->{"DTF"} = false;
@@ -62,8 +68,10 @@ class Machine implements ClientInterface {
     public function login ($username, $password) {
         if (false) {
             // no thing in here... :v
-        }else if (!!$this->Clients->{"DTC"} && !!$username && strtoupper(substr($username, 0, 3)) === "DTC") {
+        } else if (!!$this->Clients->{"DTC"} && !!$username && strtoupper(substr($username, 0, 3)) === "DTC") {
             $this->Client = new $this->Clients->{"DTC"};
+        } else if (!!$this->Clients->{"DTE"} && !!$username && strtoupper(substr($username, 0, 3)) === "DTE") {
+            $this->Client = new $this->Clients->{"DTE"};
         } else if (!!$this->Clients->{"DTF"} && !!$username && strtoupper(substr($username, 0, 3)) === "DTF") {
             $this->Client = new $this->Clients->{"DTF"};
         } else if (!!$this->Clients->{"DTN"} && !!$username && strtoupper(substr($username, 0, 3)) === "DTN") {
