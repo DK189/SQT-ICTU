@@ -186,6 +186,7 @@ class DTE extends Client implements ClientInterface {
         $TKB = new TimeTable();
         $TKB->setSemeter($semester);
 
+        $postArr["hidSemester"] = $semester->TenKy;
         $postArr["drpSemester"] = $semester->MaKy;
         $postArr["drpType"] = "B";
 
