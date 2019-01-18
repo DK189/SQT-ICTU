@@ -15,7 +15,7 @@ use \TNU\Struct\MarkEntry;
 
 class YDD extends Client implements ClientInterface {
     private $host = "http://222.252.210.171/";
-    private $prefix = "";
+    private $prefix = "CMCSoft.IU.Web.Info";
 
     public function __construct() {
         parent::__construct();
