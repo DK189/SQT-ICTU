@@ -63,7 +63,7 @@ class YDD extends Client implements ClientInterface {
         foreach ($elems as $elem) {
             $postArr[$elem->getAttribute("name")] = $elem->getAttribute("value");
         }
-        $postArr["txtUserName"] = $username;
+        $postArr["txtUserName"] = \str_replace("YDD", "", $username);
         $postArr["txtPassword"] = $password;
         self::post("Login.aspx", $postArr);
 
