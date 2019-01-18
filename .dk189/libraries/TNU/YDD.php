@@ -13,9 +13,9 @@ use \TNU\Struct\TimeTable;
 use \TNU\Struct\MarkTable;
 use \TNU\Struct\MarkEntry;
 
-class DTE extends Client implements ClientInterface {
-    private $host = "http://dangkyhoc.tueba.edu.vn/";
-    private $prefix = "dhkt";
+class YDD extends Client implements ClientInterface {
+    private $host = "http://222.252.210.171/";
+    private $prefix = "";
 
     public function __construct() {
         parent::__construct();
@@ -44,7 +44,7 @@ class DTE extends Client implements ClientInterface {
     }
 
     public function __toString() {
-        return "TNU\DTE::{$this->host}";
+        return "TNU\YDD::{$this->host}";
     }
 
     /**
@@ -81,22 +81,21 @@ class DTE extends Client implements ClientInterface {
      * @return \TNU\Struct\Student
      */
     public function getStudent () {
-        self::get("StudentMark.aspx");
+        self::get("MarkAndView.aspx");
         $doc = self::getCurrentDocument();
         $xpath = new XPath($doc);
 
         $student = new Student();
 
-        if ( !!($MaSinhVien = $xpath->evaluate("//span[@id='lblStudentCode']")) && $MaSinhVien->length > 0 ) {
-            // $student->MaSinhVien = preg_replace("/.*?\(([A-z0-9]\w+)\)/","$1",$MaSinhVien[0]->textContent);
-            $student->MaSinhVien = $MaSinhVien[0]->textContent;
+        if ( !!($MaSinhVien = $xpath->evaluate("//span[@id='PageHeader1_lblUserFullName']")) && $MaSinhVien->length > 0 ) {
+            $student->MaSinhVien = preg_replace("/.*?\(([A-z0-9]\w+)\)/","$1",$MaSinhVien[0]->textContent);
         }
 
-        if ( !!($HoTen = $xpath->evaluate("//span[@id='lblStudentName']")) && $HoTen->length > 0 ) {
+        if ( !!($HoTen = $xpath->evaluate("//select[@id='drpStudent']/option[@selected]")) && $HoTen->length > 0 ) {
             $student->HoTen = $HoTen[0]->textContent;
         }
 
-        if ( !!($Lop = $xpath->evaluate("//span[@id='lblAdminClass']")) && $Lop->length > 0 ) {
+        if ( !!($Lop = $xpath->evaluate("//select[@id='drpAdminClass']/option[@selected]")) && $Lop->length > 0 ) {
             $student->Lop = $Lop[0]->textContent;
         }
 
@@ -104,7 +103,7 @@ class DTE extends Client implements ClientInterface {
             $student->Nganh = $Nganh[0]->textContent;
         }
 
-        if ( !!($NienKhoa = $xpath->evaluate("//span[@id='lblAy']")) && $NienKhoa->length > 0 ) {
+        if ( !!($NienKhoa = $xpath->evaluate("//select[@id='drpAcademicYear']/option[@selected]")) && $NienKhoa->length > 0 ) {
             $student->NienKhoa = $NienKhoa[0]->textContent;
         }
 
@@ -112,7 +111,7 @@ class DTE extends Client implements ClientInterface {
             $student->HeDaoTao = $HeDaoTao[0]->textContent;
         }
 
-        $student->Truong = "Trường Đại học Kinh tế & Quản trị kinh doanh Thái Nguyên";
+        $student->Truong = "TRƯỜNG ĐẠI HỌC ĐIỀU DƯỠNG NAM ĐỊNH";
 
         return $student;
     }
@@ -186,7 +185,6 @@ class DTE extends Client implements ClientInterface {
         $TKB = new TimeTable();
         $TKB->setSemeter($semester);
 
-        $postArr["hidSemester"] = $semester->TenKy;
         $postArr["drpSemester"] = $semester->MaKy;
         $postArr["drpType"] = "B";
 
@@ -426,64 +424,64 @@ class DTE extends Client implements ClientInterface {
 
         $table = $xpath->query("//table[@id='grdResult']");
         if ( $table = ($table->length == 1 ? $table[0] : false) ) {
-            $trs = $xpath->query($table->getNodePath() . "/tr", $table);
-            if ($trs->length > 0) {
-                $tr = $trs[$trs->length - 1];
-                $tds = $xpath->query($tr->getNodePath() . "/td", $tr);
+         $trs = $xpath->query($table->getNodePath() . "/tr", $table);
+         if ($trs->length > 0) {
+             $tr = $trs[$trs->length - 1];
+             $tds = $xpath->query($tr->getNodePath() . "/td", $tr);
 
-                //
-                $TongTC = $tds[ 12 ]->textContent;
-                $STCTD = 0; // $tds[ $SoCotThongTin + 1 ]->textContent;
-                $STCTLN = $tds[ 6 ]->textContent;
-                $DTBC = $tds[ 2 ]->textContent;
-                $DTBCQD = $tds[ 4 ]->textContent;
-                $SoMonKhongDat = -1; // $tds[ $SoCotThongTin + 5 ]->textContent;
-                $SoTCKhongDat = -1; // $tds[ $SoCotThongTin + 6 ]->textContent;
+             //
+             $TongTC = $tds[ 12 ]->textContent;
+             $STCTD = 0; // $tds[ $SoCotThongTin + 1 ]->textContent;
+             $STCTLN = $tds[ 6 ]->textContent;
+             $DTBC = $tds[ 2 ]->textContent;
+             $DTBCQD = $tds[ 4 ]->textContent;
+             $SoMonKhongDat = -1; // $tds[ $SoCotThongTin + 5 ]->textContent;
+             $SoTCKhongDat = -1; // $tds[ $SoCotThongTin + 6 ]->textContent;
 
-                $result->TongTC = intval($TongTC);
-                $result->STCTD = intval($STCTD);
-                $result->STCTLN = intval($STCTLN);
-                $result->DTBC = floatval($DTBC);
-                $result->DTBCQD = floatval($DTBCQD);
-                $result->SoMonKhongDat = intval($SoMonKhongDat);
-                $result->SoTCKhongDat = intval($SoTCKhongDat);
-                //
+             $result->TongTC = intval($TongTC);
+             $result->STCTD = intval($STCTD);
+             $result->STCTLN = intval($STCTLN);
+             $result->DTBC = floatval($DTBC);
+             $result->DTBCQD = floatval($DTBCQD);
+             $result->SoMonKhongDat = intval($SoMonKhongDat);
+             $result->SoTCKhongDat = intval($SoTCKhongDat);
+             //
 
-            }
+         }
         }
 
         $table = $xpath->query("//table[@id='tblStudentMark']");
         if ( $table = ($table->length == 1 ? $table[0] : false) ) {
-            $trs = $xpath->query($table->getNodePath() . "/tr", $table);
+         $trs = $xpath->query($table->getNodePath() . "/tr", $table);
 
-            if ($trs->length >= 2) {
+         if ($trs->length >= 2) {
 
-                for ($i = 1; $i < $trs->length; $i++) {
-                    $tr = $trs[$i];
-                    $tds = $xpath->query($tr->getNodePath() . "/td", $tr);
+             for ($i = 1; $i < $trs->length; $i++) {
+                 $tr = $trs[$i];
+                 $tds = $xpath->query($tr->getNodePath() . "/td", $tr);
 
-                    if ($tds->length >= 14) {
+                 if ($tds->length >= 14) {
 
-                        $sub = new Subject();
-                        $sub->MaMon = $tds[1]->textContent;
-                        $sub->TenMon = $tds[2]->textContent;
-                        $sub->SoTinChi = $tds[3]->textContent;
+                     $sub = new Subject();
+                     $sub->MaMon = $tds[1]->textContent;
+                     $sub->TenMon = $tds[2]->textContent;
+                     $sub->SoTinChi = $tds[3]->textContent;
 
-                        $entry = new MarkEntry();
-                        $entry->MaMon = $sub->MaMon;
-                        $entry->CC = $tds[9]->textContent; // intval($point["CC"]);
-                        $entry->KT = $tds[10]->textContent; // intval($point["CC"]);
-                        $entry->THI = $tds[11]->textContent; // intval($point["THI"]);
-                        $entry->TKHP = $tds[12]->textContent; // intval($point["TKHP"]);
-                        $entry->DiemChu = $tds[13]->textContent;
+                     $entry = new MarkEntry();
+                     $entry->MaMon = $sub->MaMon;
+                     $entry->CC = $tds[10]->textContent; // intval($point["CC"]);
+                     $entry->KT = $tds[11]->textContent; // intval($point["CC"]);
+                     $entry->THI = $tds[12]->textContent; // intval($point["THI"]);
+                     $entry->TKHP = $tds[13]->textContent; // intval($point["TKHP"]);
+                     $entry->DiemChu = $tds[14]->textContent;
 
-                        $result->addSubject($sub);
-                        $result->addEntry($entry);
-                    }
+                     $result->addSubject($sub);
+                     $result->addEntry($entry);
+                 }
 
 
-                }
-            }
+             }
+         }
         }
 
         return $result;

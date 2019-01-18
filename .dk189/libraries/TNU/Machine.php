@@ -57,6 +57,12 @@ class Machine implements ClientInterface {
         } catch(\Exception $e) {
             $this->Clients->{"DTZ"} = false;
         }
+
+        try {
+            $this->Clients->{"YDD"} = "\TNU\YDD";
+        } catch(\Exception $e) {
+            $this->Clients->{"YDD"} = false;
+        }
     }
 
     /**
@@ -82,6 +88,8 @@ class Machine implements ClientInterface {
             $this->Client = new $this->Clients->{"DTY"};
         } else if (!!$this->Clients->{"DTZ"} && !!$username && strtoupper(substr($username, 0, 3)) === "DTZ") {
             $this->Client = new $this->Clients->{"DTZ"};
+        } else if (!!$this->Clients->{"YDD"} && !!$username && strtoupper(substr($username, 0, 3)) === "YDD") {
+            $this->Client = new $this->Clients->{"YDD"};
         } else if (!!$this->Clients->{"TEST"} && !!$username && strtoupper(substr($username, 0, 6)) === "TESTER") {
             $this->Client = $this->Clients->{"TEST"};
         } else {
